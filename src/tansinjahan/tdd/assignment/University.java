@@ -195,7 +195,7 @@ public class University implements TermEventListener{
 		}
 		
 		public void cancelCourse(Course course) {
-			if(termState!= TermState.TERM_END_STATE) {	
+			if(termState == TermState.CREATE_STUDENT_COURSE_STATE) {	
 				List<Student> students = course.students();
 			 
 				for (Student s : students) {

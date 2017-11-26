@@ -24,9 +24,10 @@ public class InputHandler {
     public static final int REGISTERCOURSE=16;
     public static final int DROPCOURSE=17;
     public static final int TAKECOURSE=18;
+    public static final int DEREGISTERCOURSE=19;
     
     private static final String CLERK_MENU = "\nPlease select from the Menu:\nCreate Student/Course\nCancel Course\nDelete Student\nMain Menu\nLog Out";
-    private static final String STUDENT_MENU = "\nPlease select from the Menu:\nRegister Course\nDrop Course\nTake Course\nMain Menu\nLog Out";
+    private static final String STUDENT_MENU = "\nPlease select from the Menu:\nRegister Course\nDrop Course\nTake Course\nDeregister Course\nMain Menu\nLog Out";
     
     OutputHandler outputHandler=new OutputHandler();
 
@@ -64,12 +65,16 @@ public class InputHandler {
         		state=o.getState();
         		oo.setOutput(output);
 	            oo.setState(state);
+	            System.out.println(o.getMessage());
+	            oo.setMessage(o.getMessage());
 	        }else if(state==STUDENTLOGIN){
 	        	o=outputHandler.studentLogin(input);
         		output=o.getOutput();
         		state=o.getState();
         		oo.setOutput(output);
 	            oo.setState(state);
+	            System.out.println(o.getMessage());
+	            oo.setMessage(o.getMessage());
 	        }else if (state==CLERK){
 	        	if (input.equalsIgnoreCase("create student")) {
 	            	output = "Please Input Student Info: 'Name, Student Number, Email, Password, status(full time/part time)'";
@@ -109,13 +114,15 @@ public class InputHandler {
 	                oo.setOutput(output);
 		            oo.setState(state);
 	            }
-	        }else if (state==STUDENT){
+	        }
+	        else if (state==STUDENT){
 	        	if (input.equalsIgnoreCase("register course")) {
 	        		Student student = StudentTable.getInstance().findByStudentNumber(loggedInStudentNumber);
 	        		List<Course> courses = student.selectedCourses();
 	        		if (courses.size() == 0) {
 	        			output = "\n=> There is no selected course to register\n" + STUDENT_MENU;
 		            	state=STUDENT;
+		            	oo.setMessage("student registered in the course fails");
 	        		} else {
 	        			output = "\nPlease input Course Code from the selected courses below to register:\n"; 
 	        			for (Course course: courses) {
@@ -125,7 +132,26 @@ public class InputHandler {
 	        		}
 	            	oo.setOutput(output);
 		            oo.setState(state);
-	            }else if (input.equalsIgnoreCase("drop course")) {
+	            }
+	        	else if(input.equalsIgnoreCase("Deregister course")) {
+	        		Student student = StudentTable.getInstance().findByStudentNumber(loggedInStudentNumber);
+	        		List<Course> courses = student.currentCourses();
+	        		if (courses.size() == 0) {
+	        			output = "\n=> There is no registered course to deregister\n" + STUDENT_MENU;
+		            	state=STUDENT;
+		            	oo.setMessage("student deregister courses fails");
+	        		} else {
+	        			output = "\nPlease input Course Code from the registered courses below to drop:\n"; 
+	        			for (Course course: courses) {
+	        				output += String.format("Title: %s, Code: %d\n", course.getTitle(), course.getCode());
+	        			}
+	        			state=DEREGISTERCOURSE;
+	        		}
+	            	oo.setOutput(output);
+		            oo.setState(state);
+	        		
+	        	}
+	        	else if (input.equalsIgnoreCase("drop course")) {
 	            	Student student = StudentTable.getInstance().findByStudentNumber(loggedInStudentNumber);
 	        		List<Course> courses = student.currentCourses();
 	        		if (courses.size() == 0) {
@@ -188,6 +214,9 @@ public class InputHandler {
 	        		state=o.getState();
 	        		oo.setOutput(output);
 		            oo.setState(state);
+		            String set= o.getMessage();
+		            System.out.println(set);
+		            oo.setMessage(set);
 	        	}
 	        }else if(state==CREATECOURSE){
 	        	if(input.equalsIgnoreCase("log out")){
@@ -206,6 +235,8 @@ public class InputHandler {
 	        		state=o.getState();
 	        		oo.setOutput(output);
 		            oo.setState(state);
+		            System.out.println(o.getMessage());
+		            oo.setMessage(o.getMessage());
 	        	}
 	        } else if (state == CANCELCOURSE) {
 	        	if(input.equalsIgnoreCase("log out")){
@@ -224,6 +255,8 @@ public class InputHandler {
 	        		state=o.getState();
 	        		oo.setOutput(output);
 		            oo.setState(state);
+		            System.out.println(o.getMessage());
+		            oo.setMessage(o.getMessage());
 	        	}
 	        } else if (state == DELETESTUDENT) {
 	        	if(input.equalsIgnoreCase("log out")){
@@ -242,6 +275,8 @@ public class InputHandler {
 	        		state=o.getState();
 	        		oo.setOutput(output);
 		            oo.setState(state);
+		            System.out.println(o.getMessage());
+		            oo.setMessage(o.getMessage());
 	        	}
 	        } else if (state == REGISTERCOURSE) {
 	        	if(input.equalsIgnoreCase("log out")){
@@ -260,8 +295,32 @@ public class InputHandler {
 	        		state=o.getState();
 	        		oo.setOutput(output);
 		            oo.setState(state);
+		            System.out.println(o.getMessage());
+		            oo.setMessage(o.getMessage());
 	        	}
-	        } else if (state == DROPCOURSE) {
+	        }
+	        else if(state == DEREGISTERCOURSE) {
+	        	if(input.equalsIgnoreCase("log out")){
+	            	output = "Successfully Log Out!";
+	                state = WAITING;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else if(input.equalsIgnoreCase("main menu")){
+	        		output = STUDENT_MENU;
+	                state = STUDENT;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else{
+	        		o=outputHandler.deregisterCourse(input);
+	        		output=o.getOutput();
+	        		state=o.getState();
+	        		oo.setOutput(output);
+		            oo.setState(state);
+		            System.out.println(o.getMessage());
+		            oo.setMessage(o.getMessage());
+	        	}
+	        }
+	        else if (state == DROPCOURSE) {
 	        	if(input.equalsIgnoreCase("log out")){
 	            	output = "Successfully Log Out!";
 	                state = WAITING;
@@ -278,6 +337,8 @@ public class InputHandler {
 	        		state=o.getState();
 	        		oo.setOutput(output);
 		            oo.setState(state);
+		            System.out.println(o.getMessage());
+		            oo.setMessage(o.getMessage());
 	        	}
 	        } else if (state == TAKECOURSE) {
 	        	if(input.equalsIgnoreCase("log out")){
@@ -296,6 +357,8 @@ public class InputHandler {
 	        		state=o.getState();
 	        		oo.setOutput(output);
 		            oo.setState(state);
+		            System.out.println(o.getMessage());
+		            oo.setMessage(o.getMessage());
 	        	}
 	        }
 	        return oo;

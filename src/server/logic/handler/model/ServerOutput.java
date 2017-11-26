@@ -3,6 +3,8 @@ package server.logic.handler.model;
 public class ServerOutput {
 	String output;
 	int state;
+	String message;
+	
 	public ServerOutput(String output,int state){
 		this.output=output;
 		this.state=state;
@@ -20,6 +22,10 @@ public class ServerOutput {
 	public void setState(int state) {
 		this.state = state;
 	}
-	
-
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public String getMessage() {
+		return message;
+	}
 }
