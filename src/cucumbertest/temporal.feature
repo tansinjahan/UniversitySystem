@@ -1,5 +1,5 @@
-Feature: Temporal relationship valid
-Scenario Outline:
+Feature: Temporal relationship 
+Scenario Outline: Temporal relationship between creation of student, course, registration valid
 	Given the university is initialized
 	And the term is started
 	And the user inputs <option>

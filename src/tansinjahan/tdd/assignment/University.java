@@ -196,7 +196,7 @@ public class University implements TermEventListener{
 		
 		public void cancelCourse(Course course) {
 			if(termState == TermState.CREATE_STUDENT_COURSE_STATE) {	
-				List<Student> students = course.students();
+				List<Student> students = students();
 			 
 				for (Student s : students) {
 					s.currentCourses().remove(course);
@@ -211,7 +211,13 @@ public class University implements TermEventListener{
 		}
 		
 		public void destroyCourse(Course course) {
-					cancelCourse(course);
+			List<Student> students = course.students();
+			 
+			for (Student s : students) {
+				s.currentCourses().remove(course);
+				s.selectedCourses().remove(course);
+			}
+			course.students().clear();
 					CourseTable.getInstance().courses.remove(course);
 		}
 		
@@ -241,6 +247,61 @@ public class University implements TermEventListener{
 				throw new IllegalStateException("Too late to delete student");
 			}
 }
+		
+		public void submitAssignMark(Course course, Student student) {
+			if (course == null || student == null) {
+				throw new IllegalArgumentException("Course or student is not found");
+			}
+			try {
+				course.submitAssignmentMarkForStudent(student);
+			} catch (Exception ex) {
+				throw new IllegalStateException(ex.getMessage());
+			}
+		}
+		
+		public void submitMidMark(Course course, Student student) {
+			if (course == null || student == null) {
+				throw new IllegalArgumentException("Course or student is not found");
+			}
+			try {
+				course.submitMidtermMarkForStudent(student);
+			} catch (Exception ex) {
+				throw new IllegalStateException(ex.getMessage());
+			}
+		}
+		
+		public void submitProjectMark(Course course, Student student) {
+			if (course == null || student == null) {
+				throw new IllegalArgumentException("Course or student is not found");
+			}
+			try {
+				((ProjectCourse) course).submitProjectMarkForStudent(student);
+			} catch (Exception ex) {
+				throw new IllegalStateException(ex.getMessage());
+			}
+		}
+		
+		public void submitFinalMark(Course course, Student student) {
+			if (course == null || student == null) {
+				throw new IllegalArgumentException("Course or student is not found");
+			}
+			try {
+				course.submitFinalMarkForStudent(student);
+			} catch (Exception ex) {
+				throw new IllegalStateException(ex.getMessage());
+			}
+		}
+		
+		public void obtainMark(Course course, Student student) {
+			if (course == null || student == null) {
+				throw new IllegalArgumentException("Course or student is not found");
+			}
+			try {
+				course.markForStudent(student);
+			} catch (Exception ex) {
+				throw new IllegalStateException(ex.getMessage());
+			}
+		}
 		
 		public boolean dropCourse(Student student, Course course) {
 					if (termState != TermState.TWO_WEEK_PASSED_AFTER_TERM_STARTED_STATE) {

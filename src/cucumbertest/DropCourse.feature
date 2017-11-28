@@ -1,5 +1,5 @@
 Feature: Student drop course 
-Scenario Outline: Student drop course after 2 weeks of start term valid
+Scenario Outline: Student drop course after 2 weeks of start term success
  		Given the university is initialized
 		And the term is started
 		And the user inputs <option>

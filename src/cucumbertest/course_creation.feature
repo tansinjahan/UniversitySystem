@@ -43,7 +43,7 @@ Scenario Outline: Redundant Course creation unsuccessfull
 	And the user inputs <option>
 	When the clerk logs in with admin
 	And the clerk input create course with <title> and <code> and <capacity> and <hasFinal> and <assignment> and <midterm> and <prerequisite> and <hasProject>
-	And check if the course <code> is already exists
+	And the clerk input create course with <title> and <code> and <capacity> and <hasFinal> and <assignment> and <midterm> and <prerequisite> and <hasProject>
 	Then the course can not be created
 	
 	Examples:

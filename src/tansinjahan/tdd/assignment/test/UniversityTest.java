@@ -236,13 +236,9 @@ public class UniversityTest {
 				Student student = versity.createStudent("John", 1,"Full time");
 				versity.selectCourseForStudent(student, course);
 				
-				simulator.termAllowCourseRegistration();
-				versity.registerStudentForCourse(student, course);
 				
 				versity.cancelCourse(course);
 				boolean cancelled = 
-						!course.students().contains(student) && 
-						!student.currentCourses().contains(course) && 
 						!student.selectedCourses().contains(course);
 				
 				assertEquals(true, cancelled);

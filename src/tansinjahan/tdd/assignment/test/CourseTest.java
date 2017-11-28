@@ -357,7 +357,11 @@ public class CourseTest {
 	 									true, // enforcePrereqs)
 	 									false // isProjectCourse
 	 									);
-	 		course.addStudent(new Student("One", 1,"Full time"));
+	 		Student student = new Student("One", 1,"Full time");
+	 		course.addStudent(student);
+	 		course.submitAssignmentMarkForStudent(student);
+	 		course.submitMidtermMarkForStudent(student);
+	 		course.submitFinalMarkForStudent(student);
 	 		boolean markIsGreaterThanZero = course.markForStudent(new Student("One", 1,"Full time")) > 0;
 	 		assertEquals(true, markIsGreaterThanZero);
 	 	}
@@ -391,8 +395,11 @@ public class CourseTest {
 	 									true, // enforcePrereqs)
 	 									false // isProjectCourse
 	 									);
+	 		Student student = new Student("One", 1,"Full time");
 	 		course.addStudent(new Student("One", 1,"Full time"));
-	 		
+	 		course.submitAssignmentMarkForStudent(student);
+	 		course.submitMidtermMarkForStudent(student);
+	 		course.submitFinalMarkForStudent(student);
 	 		int markForStudent = course.markForStudent(new Student("One", 1,"Full time"));
 	 		int againMarkForStudent = course.markForStudent(new Student("One", 1,"Full Time"));
 	 		

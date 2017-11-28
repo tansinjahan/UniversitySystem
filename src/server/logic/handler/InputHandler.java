@@ -26,7 +26,14 @@ public class InputHandler {
     public static final int TAKECOURSE=18;
     public static final int DEREGISTERCOURSE=19;
     
-    private static final String CLERK_MENU = "\nPlease select from the Menu:\nCreate Student/Course\nCancel Course\nDelete Student\nMain Menu\nLog Out";
+    // Student mark menu
+    public static final int SUBMITASSIGNMENTMARKS = 20;
+    public static final int SUBMITMIDTERMMARKS = 21;
+    public static final int SUBMITPROJECTMARKS = 22;
+    public static final int SUBMITFINALMARKS = 23;
+    public static final int OBTAINSTUDENTMARKS = 24;
+    
+    private static final String CLERK_MENU = "\nPlease select from the Menu:\nCreate Student/Course\nCancel Course\nDelete Student\nGenerate Assign. Mark\nGenerate Mid Mark\nGenerate Project Mark\nGenerate Final Mark\nObtain Mark\nMain Menu\nLog Out";
     private static final String STUDENT_MENU = "\nPlease select from the Menu:\nRegister Course\nDrop Course\nTake Course\nDeregister Course\nMain Menu\nLog Out";
     
     OutputHandler outputHandler=new OutputHandler();
@@ -96,6 +103,31 @@ public class InputHandler {
 	            }else if(input.equalsIgnoreCase("delete student")){
 	            	output = "Please Input Student Number to delete: ";
 	            	state=DELETESTUDENT;
+	            	oo.setOutput(output);
+		            oo.setState(state);
+	            }else if(input.equalsIgnoreCase("generate assign. mark")) {
+	            	output = "Please input course code and student number: 'course_code, student_number'";
+	            	state = SUBMITASSIGNMENTMARKS;
+	            	oo.setOutput(output);
+		            oo.setState(state);
+	            }else if(input.equalsIgnoreCase("generate mid mark")) {
+	            	output = "Please input course code and student number: 'course_code, student_number'";
+	            	state = SUBMITMIDTERMMARKS;
+	            	oo.setOutput(output);
+		            oo.setState(state);
+	            }else if(input.equalsIgnoreCase("generate project mark")) {
+	            	output = "Please input course code and student number: 'course_code, student_number'";
+	            	state = SUBMITPROJECTMARKS;
+	            	oo.setOutput(output);
+		            oo.setState(state);
+	            }else if(input.equalsIgnoreCase("generate final mark")) {
+	            	output = "Please input course code and student number: 'course_code, student_number'";
+	            	state = SUBMITFINALMARKS;
+	            	oo.setOutput(output);
+		            oo.setState(state);
+	            }else if(input.equalsIgnoreCase("obtain mark")) {
+	            	output = "Please input course code and student number: 'course_code, student_number'";
+	            	state = OBTAINSTUDENTMARKS;
 	            	oo.setOutput(output);
 		            oo.setState(state);
 	            }else if(input.equalsIgnoreCase("log out")){
@@ -278,7 +310,107 @@ public class InputHandler {
 		            System.out.println(o.getMessage());
 		            oo.setMessage(o.getMessage());
 	        	}
-	        } else if (state == REGISTERCOURSE) {
+	        } else if (state == SUBMITASSIGNMENTMARKS) {
+	        	if(input.equalsIgnoreCase("log out")){
+	            	output = "Successfully Log Out!";
+	                state = WAITING;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else if(input.equalsIgnoreCase("main menu")){
+	        		output = CLERK_MENU;
+	                state = CLERK;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else{
+	        		o=outputHandler.submitAssignMark(input);
+	        		output=o.getOutput();
+	        		state=o.getState();
+	        		oo.setOutput(output);
+		            oo.setState(state);
+		            System.out.println(o.getMessage());
+		            oo.setMessage(o.getMessage());
+	        	}
+	        } else if (state == SUBMITMIDTERMMARKS) {
+	        	if(input.equalsIgnoreCase("log out")){
+	            	output = "Successfully Log Out!";
+	                state = WAITING;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else if(input.equalsIgnoreCase("main menu")){
+	        		output = CLERK_MENU;
+	                state = CLERK;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else{
+	        		o=outputHandler.submitMidMark(input);
+	        		output=o.getOutput();
+	        		state=o.getState();
+	        		oo.setOutput(output);
+		            oo.setState(state);
+		            System.out.println(o.getMessage());
+		            oo.setMessage(o.getMessage());
+	        	}
+	        } else if (state == SUBMITPROJECTMARKS) {
+	        	if(input.equalsIgnoreCase("log out")){
+	            	output = "Successfully Log Out!";
+	                state = WAITING;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else if(input.equalsIgnoreCase("main menu")){
+	        		output = CLERK_MENU;
+	                state = CLERK;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else{
+	        		o=outputHandler.submitProjectMark(input);
+	        		output=o.getOutput();
+	        		state=o.getState();
+	        		oo.setOutput(output);
+		            oo.setState(state);
+		            System.out.println(o.getMessage());
+		            oo.setMessage(o.getMessage());
+	        	}
+	        } else if (state == SUBMITFINALMARKS) {
+	        	if(input.equalsIgnoreCase("log out")){
+	            	output = "Successfully Log Out!";
+	                state = WAITING;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else if(input.equalsIgnoreCase("main menu")){
+	        		output = CLERK_MENU;
+	                state = CLERK;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else{
+	        		o=outputHandler.submitFinalMark(input);
+	        		output=o.getOutput();
+	        		state=o.getState();
+	        		oo.setOutput(output);
+		            oo.setState(state);
+		            System.out.println(o.getMessage());
+		            oo.setMessage(o.getMessage());
+	        	}
+	        } else if (state == OBTAINSTUDENTMARKS) {
+	        	if(input.equalsIgnoreCase("log out")){
+	            	output = "Successfully Log Out!";
+	                state = WAITING;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else if(input.equalsIgnoreCase("main menu")){
+	        		output = CLERK_MENU;
+	                state = CLERK;
+	                oo.setOutput(output);
+		            oo.setState(state);
+	        	}else{
+	        		o=outputHandler.obtainMarks(input);
+	        		output=o.getOutput();
+	        		state=o.getState();
+	        		oo.setOutput(output);
+		            oo.setState(state);
+		            System.out.println(o.getMessage());
+		            oo.setMessage(o.getMessage());
+	        	}
+	        }else if (state == REGISTERCOURSE) {
 	        	if(input.equalsIgnoreCase("log out")){
 	            	output = "Successfully Log Out!";
 	                state = WAITING;

@@ -343,6 +343,58 @@ public class cucumberStepDefinitions {
 	public void the_student_registered_for_course() throws Throwable {
 	 
 	}
+	
+	//hierarchical relationship valid or invalid
+	
+	@Then("^the clerk gives input for (.*) (\\d+)$")
+	public void the_clerk_gives_input_for(String courseCode, int studentNum) throws Throwable {
+		output = handler.processInput(courseCode +","+studentNum, state);
+		state = output.getState();
+	}
+
+	@Then("^the assignment marks is generated$")
+	public void the_assignment_marks_is_generated() throws Throwable {
+		assertThat(state, equalTo(OutputHandler.CLERK));
+		assertThat("Assignment marks generated succesfully",equalTo(output.getMessage()));
+	}
+	
+	@Then("^the mid term mark is generated$")
+	public void the_mid_term_mark_is_generated() throws Throwable {
+		assertThat(state, equalTo(OutputHandler.CLERK));
+		assertThat("Mid marks generation successful",equalTo(output.getMessage()));
+	}
+	
+	@Then("^the project mark is generated$")
+	public void the_project_mark_is_generated() throws Throwable {
+		assertThat(state, equalTo(OutputHandler.CLERK));
+		assertThat("Project marks generation successful",equalTo(output.getMessage()));
+	}
+	
+	@Then("^the marks obtained successful$")
+	public void the_marks_obtained_successful() throws Throwable {
+		assertThat(state, equalTo(OutputHandler.CLERK));
+		assertThat("Marks obtained successfully",equalTo(output.getMessage()));
+	}
+	
+	@Then("^the mark can not be obtained$")
+	public void the_mark_can_not_be_obtained() throws Throwable {
+		assertThat(state, equalTo(OutputHandler.OBTAINSTUDENTMARKS));
+		assertThat("Marks obtain unsuccessful",equalTo(output.getMessage()));
+	}
+	
+	@Then("^the project marks can not be calculated$")
+	public void the_project_marks_can_not_be_calculated() throws Throwable {
+		assertThat(state, equalTo(OutputHandler.SUBMITPROJECTMARKS));
+		assertThat("Project marks generation unsuccessful",equalTo(output.getMessage()));
+	}
+	
+	@Then("^the final mark is generated$")
+	public void the_final_mark_is_generated() throws Throwable {
+		assertThat(state, equalTo(OutputHandler.CLERK));
+		assertThat("Final marks generation successful",equalTo(output.getMessage()));
+	}
+	
+
 
 	
 }

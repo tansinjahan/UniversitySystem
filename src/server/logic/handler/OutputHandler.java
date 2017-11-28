@@ -24,6 +24,13 @@ public class OutputHandler {
     public static final int TAKECOURSE=18;
     public static final int DEREGISTERCOURSE=19;
     
+    // Student mark menu
+    public static final int SUBMITASSIGNMENTMARKS = 20;
+    public static final int SUBMITMIDTERMMARKS = 21;
+    public static final int SUBMITPROJECTMARKS = 22;
+    public static final int SUBMITFINALMARKS = 23;
+    public static final int OBTAINSTUDENTMARKS = 24;
+    
     private static final String CLERK_MENU = "\nPlease select from the Menu:\nCreate Student/Course\nCancel Course\nDelete Student\nMain Menu\nLog Out";
     private static final String STUDENT_MENU = "\nPlease select from the Menu:\nRegister Course\nDrop Course\nTake Course\nDeregister Course\nMain Menu\nLog Out";
 
@@ -326,6 +333,122 @@ public class OutputHandler {
 	
 	public boolean isBoolean(String val) {
 		return val.equalsIgnoreCase("true") || val.equalsIgnoreCase("false");
+	}
+
+	public Output submitAssignMark(String input) {
+		Output output=new Output("",0);
+		String[] arr = input.split(",");
+        if (arr.length != 2 || (!isInteger(arr[0]) && !isInteger(arr[1]))) {
+        	output.setOutput("Your input should be course code and student number: 'course_code, student_number'");
+        	output.setState(SUBMITASSIGNMENTMARKS);
+        	output.setMessage("Assignment marks generation unsuccessful");
+        } else {
+        	try {
+        		Course course = CourseTable.getInstance().findCourseByCode(Integer.parseInt(arr[0]));
+        		Student student = StudentTable.getInstance().findByStudentNumber(Integer.parseInt(arr[1]));
+        		University.getInstance().submitAssignMark(course, student);
+        		output.setOutput("Success");
+        		output.setState(CLERK);
+        		output.setMessage("Assignment marks generated succesfully");
+        	} catch (Exception ex) {
+        		output.setOutput(ex.getMessage());
+            	output.setState(SUBMITASSIGNMENTMARKS);
+            	output.setMessage("Assignment marks generation unsuccessful");
+        	}
+        }
+        return output;
+	}
+	
+	public Output submitMidMark(String input) {
+		Output output=new Output("",0);
+		String[] arr = input.split(",");
+        if (arr.length != 2 || (!isInteger(arr[0]) && !isInteger(arr[1]))) {
+        	output.setOutput("Your input should be course code and student number: 'course_code, student_number'");
+        	output.setState(SUBMITMIDTERMMARKS);
+        } else {
+        	try {
+        		Course course = CourseTable.getInstance().findCourseByCode(Integer.parseInt(arr[0]));
+        		Student student = StudentTable.getInstance().findByStudentNumber(Integer.parseInt(arr[1]));
+        		University.getInstance().submitMidMark(course, student);
+        		output.setOutput("Success");
+        		output.setState(CLERK);
+        		output.setMessage("Mid marks generation successful");
+        	} catch (Exception ex) {
+        		output.setOutput(ex.getMessage());
+            	output.setState(SUBMITMIDTERMMARKS);
+            	output.setMessage("Mid marks generation unsuccessful");
+        	}
+        }
+        return output;
+	}
+	
+	public Output submitProjectMark(String input) {
+		Output output=new Output("",0);
+		String[] arr = input.split(",");
+        if (arr.length != 2 || (!isInteger(arr[0]) && !isInteger(arr[1]))) {
+        	output.setOutput("Your input should be course code and student number: 'course_code, student_number'");
+        	output.setState(SUBMITPROJECTMARKS);
+        } else {
+        	try {
+        		Course course = CourseTable.getInstance().findCourseByCode(Integer.parseInt(arr[0]));
+        		Student student = StudentTable.getInstance().findByStudentNumber(Integer.parseInt(arr[1]));
+        		University.getInstance().submitProjectMark(course, student);
+        		output.setOutput("Success");
+        		output.setState(CLERK);
+        		output.setMessage("Project marks generation successful");
+        	} catch (Exception ex) {
+        		output.setOutput(ex.getMessage());
+            	output.setState(SUBMITPROJECTMARKS);
+            	output.setMessage("Project marks generation unsuccessful");
+        	}
+        }
+        return output;
+	}
+	
+	public Output submitFinalMark(String input) {
+		Output output=new Output("",0);
+		String[] arr = input.split(",");
+        if (arr.length != 2 || (!isInteger(arr[0]) && !isInteger(arr[1]))) {
+        	output.setOutput("Your input should be course code and student number: 'course_code, student_number'");
+        	output.setState(SUBMITFINALMARKS);
+        } else {
+        	try {
+        		Course course = CourseTable.getInstance().findCourseByCode(Integer.parseInt(arr[0]));
+        		Student student = StudentTable.getInstance().findByStudentNumber(Integer.parseInt(arr[1]));
+        		University.getInstance().submitFinalMark(course, student);
+        		output.setOutput("Success");
+        		output.setState(CLERK);
+        		output.setMessage("Final marks generation successful");
+        	} catch (Exception ex) {
+        		output.setOutput(ex.getMessage());
+            	output.setState(SUBMITFINALMARKS);
+            	output.setMessage("Final marks generation unsuccessful");
+        	}
+        }
+        return output;
+	}
+	
+	public Output obtainMarks(String input) {
+		Output output=new Output("",0);
+		String[] arr = input.split(",");
+        if (arr.length != 2 || (!isInteger(arr[0]) && !isInteger(arr[1]))) {
+        	output.setOutput("Your input should be course code and student number: 'course_code, student_number'");
+        	output.setState(OBTAINSTUDENTMARKS);
+        } else {
+        	try {
+        		Course course = CourseTable.getInstance().findCourseByCode(Integer.parseInt(arr[0]));
+        		Student student = StudentTable.getInstance().findByStudentNumber(Integer.parseInt(arr[1]));
+        		University.getInstance().obtainMark(course, student);
+        		output.setOutput("Success");
+        		output.setState(CLERK);
+        		output.setMessage("Marks obtained successfully");
+        	} catch (Exception ex) {
+        		output.setOutput(ex.getMessage());
+            	output.setState(OBTAINSTUDENTMARKS);
+            	output.setMessage("Marks obtain unsuccessful");
+        	}
+        }
+        return output;
 	}
 
 }

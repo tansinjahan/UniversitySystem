@@ -43,7 +43,7 @@ Scenario Outline: Redundant student creation fails
 	And the user inputs <option>
 	When the clerk logs in with admin
 	When the clerk input create student with <name> and <number> and <email> and <pass> and <status> properly
-	And check if the student <number> is already created 
+	When the clerk input create student with <name> and <number> and <email> and <pass> and <status> properly
 	Then the duplicate student can not be created
 	
 	Examples:
